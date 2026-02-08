@@ -18,7 +18,7 @@ target_include_directories(${PROJECT_PRIMARY_TARGET}
 # Set sources
 target_sources(${PROJECT_PRIMARY_TARGET}
         PRIVATE
-            "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.c"
+            "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
 )
 
 # Initialize export files
@@ -43,7 +43,7 @@ if(BUILD_SHARED_LIBS)
     )
 
     # Set export files
-    set(EXPORT_HEADER_FILE "export_shared.h")
+    set(EXPORT_HEADER_FILE "export_shared.hpp")
     set(EXPORT_TARGET_FILE "${PROJECT_PACKAGE_NAME}SharedTargets.cmake")
 else()
     # Set the primary target's properties
@@ -61,7 +61,7 @@ else()
     )
 
     # Set export files
-    set(EXPORT_HEADER_FILE "export_static.h")
+    set(EXPORT_HEADER_FILE "export_static.hpp")
     set(EXPORT_TARGET_FILE "${PROJECT_EXPORT_NAME}StaticTargets.cmake")
 endif()
 
@@ -95,10 +95,10 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
 
     # Create export files
     include(GenerateExportHeader)
-    set(EXPORT_HEADER_FILE "export_static.h")
+    set(EXPORT_HEADER_FILE "export_static.hpp")
     set(EXPORT_TARGET_FILE "${PROJECT_EXPORT_NAME}StaticTargets.cmake")
     if(BUILD_SHARED_LIBS)
-        set(EXPORT_HEADER_FILE "export_shared.h")
+        set(EXPORT_HEADER_FILE "export_shared.hpp")
         set(EXPORT_TARGETS_FILE "${PROJECT_PACKAGE_NAME}SharedTargets.cmake")
     endif()
 
@@ -125,3 +125,4 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
             NAMESPACE ${PROJECT_NAMESPACE}::)
 
 endif()
+
