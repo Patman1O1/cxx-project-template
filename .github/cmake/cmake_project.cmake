@@ -86,17 +86,17 @@ file(REMOVE "${PROJECT_ROOT_DIR}/conanfile.py.in")
 # Rename the template subdirectory to the project name
 file(RENAME "${PROJECT_ROOT_DIR}/include/template" "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}")
 
-# Configure the project header file (i.e. ${PROJECT_PRIMARY_TARGET}.h)
-configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.h.in"
-               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.h"
+# Configure the project header file (i.e. ${PROJECT_PRIMARY_TARGET}.hpp)
+configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.hpp.in"
+               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.hpp"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.h.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.hpp.in")
 
-# Configure the export header file (i.e. export.h)
-configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.h.in"
+# Configure the export header file (i.e. export.hpp)
+configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in"
                "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.h"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.h.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in")
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Project Source Directory Configuration
@@ -119,29 +119,29 @@ file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt.in
 
 if(PROJECT_TYPE MATCHES "^(static_library|shared_library)$")
     # Remove main.c.in (libraries don't have entry points)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.c.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
 
-    # Configure ${PROJECT_PRIMARY_TARGET}.c
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.c.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.c"
+    # Configure ${PROJECT_PRIMARY_TARGET}.cpp
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.c.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
 elseif(PROJECT_TYPE MATCHES "interface_library")
     # Remove all source files
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.c.in")
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.c.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
 else()
-    # Configure main.c
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.c.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.c"
+    # Configure main.cpp
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.c.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
 
-    # Configure ${PROJECT_PRIMARY_TARGET}.c
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.c.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.c"
+    # Configure ${PROJECT_PRIMARY_TARGET}.cpp
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.c.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
 endif()
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -167,3 +167,4 @@ configure_file("${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/template_test
                "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}_test.cpp"
                @ONLY)
 file(REMOVE "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/template_test.cpp.in")
+
