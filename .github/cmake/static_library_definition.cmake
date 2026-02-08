@@ -42,7 +42,7 @@ if(NOT BUILD_SHARED_LIBS)
     )
 
     # Set export files
-    set(EXPORT_HEADER_FILE "export_static.h")
+    set(EXPORT_HEADER_FILE "export_static.hpp")
     set(EXPORT_TARGET_FILE "${PROJECT_EXPORT_NAME}StaticTargets.cmake")
 else()
     # Set the primary target's properties
