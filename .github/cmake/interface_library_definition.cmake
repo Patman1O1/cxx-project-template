@@ -61,3 +61,4 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
             TYPE INCLUDE
             COMPONENT ${PROJECT_OUTPUT_NAME}-dev)
 endif()
+
