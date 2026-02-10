@@ -19,7 +19,7 @@ permissions:
 jobs:
   create_project:
     # Make sure this is not the template repository
-    if: github.repository != 'Patman1O1/c-project-template'
+    if: github.repository != 'Patman1O1/cxx-project-template'
     runs-on: ubuntu-latest
 
     steps:
