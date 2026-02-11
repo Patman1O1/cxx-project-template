@@ -24,6 +24,12 @@ target_sources(${PROJECT_PRIMARY_TARGET}_test
         "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_PRIMARY_TARGET}_test.cpp"
         "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
 )
+if(EXISTS "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp")
+    target_sources(${PROJECT_PRIMARY_TARGET}_test
+            PRIVATE
+                "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
+    )
+endif()
 
 target_link_libraries(${PROJECT_PRIMARY_TARGET}_test
         PRIVATE
