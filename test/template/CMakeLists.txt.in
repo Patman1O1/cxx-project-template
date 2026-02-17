@@ -33,7 +33,7 @@ endif()
 
 target_link_libraries(${PROJECT_PRIMARY_TARGET}_test
         PRIVATE
-            ${PROJECT_NAMESPACE}::PROJECT_OBJECTS
+            $<$<TARGET_EXISTS:${PROJECT_PRIMARY_TARGET}_objects>:${PROJECT_PRIMARY_TARGET}_objects>
             GTest::gtest_main
             GTest::gmock_main
 )
