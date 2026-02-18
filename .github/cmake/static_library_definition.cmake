@@ -6,11 +6,11 @@ add_library(${PROJECT_PRIMARY_TARGET})
 add_library(${PROJECT_NAMESPACE}::${PROJECT_PRIMARY_TARGET} ALIAS ${PROJECT_PRIMARY_TARGET})
 
 # Create objects
-add_library(PROJECT_OBJECTS OBJECT "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp")
-add_library(${PROJECT_NAMESPACE}::PROJECT_OBJECTS ALIAS PROJECT_OBJECTS)
+add_library(${PROJECT_PRIMARY_TARGET}_objects OBJECT "${CMAKE_SOURCE_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp")
+add_library(${PROJECT_NAMESPACE}::${PROJECT_PRIMARY_TARGET}_objects ALIAS ${PROJECT_PRIMARY_TARGET}_objects)
 
 # Include directories
-target_include_directories(PROJECT_OBJECTS
+target_include_directories(${PROJECT_PRIMARY_TARGET}_objects
         PRIVATE
             "${CMAKE_SOURCE_DIR}/include/${PROJECT_PRIMARY_TARGET}"
         PUBLIC
@@ -19,10 +19,10 @@ target_include_directories(PROJECT_OBJECTS
 )
 
 # Set sources
-target_sources(${PROJECT_PRIMARY_TARGET} PRIVATE $<TARGET_OBJECTS:PROJECT_OBJECTS>)
+target_sources(${PROJECT_PRIMARY_TARGET} PRIVATE $<TARGET_OBJECTS:${PROJECT_PRIMARY_TARGET}_objects>)
 
 # Link objects with the primary target
-target_link_libraries(${PROJECT_PRIMARY_TARGET} PRIVATE PROJECT_OBJECTS)
+target_link_libraries(${PROJECT_PRIMARY_TARGET} PRIVATE ${PROJECT_PRIMARY_TARGET}_objects)
 
 # Initialize export files
 include(GenerateExportHeader)
