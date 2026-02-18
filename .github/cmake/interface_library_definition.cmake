@@ -9,9 +9,7 @@ set_target_properties(${PROJECT_PRIMARY_TARGET} PROPERTIES
 
 # Include directories
 target_include_directories(${PROJECT_PRIMARY_TARGET}
-        PRIVATE
-            "${CMAKE_SOURCE_DIR}/include/${PROJECT_PRIMARY_TARGET}"
-        PUBLIC
+        INTERFACE
             "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
             "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
