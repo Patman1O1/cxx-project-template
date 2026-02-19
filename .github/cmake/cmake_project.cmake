@@ -96,7 +96,7 @@ file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.hpp.
 
 # Configure the export header file (i.e. export.hpp)
 configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in"
-               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.h"
+               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp"
                @ONLY)
 file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in")
 
