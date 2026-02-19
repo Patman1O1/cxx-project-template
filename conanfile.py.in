@@ -3,13 +3,13 @@ from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
 from conan.tools.build import check_min_cppstd
 
 class @PROJECT_NAME_PASCAL_CASE@File(ConanFile):
-    name: str = "@PROJECT_NAME_SNAKE_CASE@"
-    version: str = "@PROJECT_VERSION@"
-    label: str = "@PROJECT_DESCRIPTION@"
+    name = "@PROJECT_NAME_SNAKE_CASE@"
+    version = "@PROJECT_VERSION@"
+    label = "@PROJECT_DESCRIPTION@"
 
-    settings: tuple[str] = ("os", "arch", "compiler", "build_type")
+    settings = ("os", "arch", "compiler", "build_type")
 
-    exports_sources: tuple[str] = ("CMakeLists.txt", "cmake/*", "src/*", "test/*")
+    exports_sources = ("CMakeLists.txt", "cmake/*", "src/*", "test/*")
 
     options: dict = {
         "build_shared_libs": [True, False],
@@ -41,16 +41,19 @@ class @PROJECT_NAME_PASCAL_CASE@File(ConanFile):
         cmake_layout(self)
 
     def generate(self) -> None:
-        toolchain: CMakeToolchain = CMakeToolchain(self)
-        self.set_cache_vars(toolchain)
+        toolchain = CMakeToolchain(self)
+        toolchain.variables["BUILD_SHARED_LIBS"] = self.options.build_shared_libs
+        if self.settings.build_type == "Debug":
+            toolchain.variables["BUILD_TESTS"] = True
+        else:
+            toolchain.variables["BUILD_TESTS"] = False
         toolchain.generate()
         CMakeDeps(self).generate()
 
     def build(self) -> None:
-        cmake: CMake = CMake(self)
+        cmake = CMake(self)
         cmake.configure()
         cmake.build()
 
     def package(self) -> None:
-        cmake: CMake = CMake(self)
-        cmake.install()
+        CMake(self).install()
