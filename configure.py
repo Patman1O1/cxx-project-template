@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
-import os
 import argparse
 import shutil
 import subprocess
@@ -13,7 +12,7 @@ parser.add_argument("build_type", help="CMake build type", type=str)
 args: argparse.Namespace = parser.parse_args()
 
 # Set project directories
-source_dir: Path = Path(os.getcwd())
+source_dir: Path = Path(__file__).parent.resolve()
 binary_dir: Path = source_dir/"build"
 
 # Set Conan toolchain file path
