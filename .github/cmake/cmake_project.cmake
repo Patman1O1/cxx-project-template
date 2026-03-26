@@ -7,6 +7,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/functions.cmake")
 # Parameters (Required)
 #-----------------------------------------------------------------------------------------------------------------------
 set(PROJECT_NAME "" CACHE STRING "The name of the project")
+set(PROJECT_AUTHOR "" CACHE STRING "The name of the author")
 set(PROJECT_TYPE "" CACHE STRING "The type of the project")
 
 #-----------------------------------------------------------------------------------------------------------------------
