@@ -58,3 +58,8 @@ class @PROJECT_NAME_PASCAL_CASE@File(ConanFile):
 
     def package(self) -> None:
         CMake(self).install()
+
+    def source(self):
+        git = Git(self)
+        git.clone("https://github.com/@PROJECT_AUTHOR@/@PROJECT_NAME_KEBAB_CASE@.git", target=".")
+        git.checkout("v@PROJECT_VERSION@")
