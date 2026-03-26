@@ -25,6 +25,11 @@ if(NOT PROJECT_NAME)
     return()
 endif()
 
+# Validate the project author
+if (NOT PROJECT_AUTHOR)
+    message(FATAL_ERROR "PROJECT_AUTHOR was not specified")
+endif()
+
 # Format the project type in snake_case
 to_snake_case("${PROJECT_TYPE}" PROJECT_TYPE)
 
