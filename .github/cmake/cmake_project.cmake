@@ -92,25 +92,25 @@ file(REMOVE "${PROJECT_ROOT_DIR}/conanfile.py.in")
 # Project Include Directory Configuration
 #-----------------------------------------------------------------------------------------------------------------------
 # Rename the template subdirectory to the project name
-file(RENAME "${PROJECT_ROOT_DIR}/include/template" "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}")
+file(RENAME "${PROJECT_ROOT_DIR}/include/template" "${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}")
 
 # Configure the project header file (i.e. ${PROJECT_PRIMARY_TARGET}.hpp)
-configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.hpp.in"
-               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.hpp"
+configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/template.hpp.in"
+               "${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/${PROJECT_PRIMARY_TARGET}.hpp"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/template.hpp.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/template.hpp.in")
 
 # Configure the export header file (i.e. export.hpp)
-configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in"
-               "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp"
+configure_file("${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/export.hpp.in"
+               "${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/export.hpp"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_PRIMARY_TARGET}/export.hpp.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/include/${PROJECT_OUTPUT_NAME}/export.hpp.in")
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Project Source Directory Configuration
 #-----------------------------------------------------------------------------------------------------------------------
-# Rename ${PROJECT_ROOT_DIR}/src/template to ${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}
-file(RENAME "${PROJECT_ROOT_DIR}/src/template" "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}")
+# Rename ${PROJECT_ROOT_DIR}/src/template to ${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}
+file(RENAME "${PROJECT_ROOT_DIR}/src/template" "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}")
 
 # Configure the source directory CMakeLists.txt
 configure_file("${PROJECT_ROOT_DIR}/src/CMakeLists.txt.in"
@@ -120,43 +120,43 @@ file(REMOVE "${PROJECT_ROOT_DIR}/src/CMakeLists.txt.in")
 
 # Configure the CMakeLists.txt file in ${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}
 file(READ "${CMAKE_CURRENT_LIST_DIR}/${PROJECT_TYPE}_definition.cmake" PROJECT_PRIMARY_TARGET_INIT)
-configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt.in"
-               "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt"
+configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/CMakeLists.txt.in"
+               "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/CMakeLists.txt"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/CMakeLists.txt.in")
 
 if(PROJECT_TYPE MATCHES "^(static_library|shared_library)$")
     # Remove main.c.in (libraries don't have entry points)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/main.cpp.in")
 
     # Configure ${PROJECT_PRIMARY_TARGET}.cpp
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/template.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/${PROJECT_PRIMARY_TARGET}.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/template.cpp.in")
 elseif(PROJECT_TYPE MATCHES "interface_library")
     # Remove all source files
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/template.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/main.cpp.in")
 else()
     # Configure main.cpp
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp"
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/main.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/main.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/main.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/main.cpp.in")
 
     # Configure ${PROJECT_PRIMARY_TARGET}.cpp
-    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in"
-                   "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}.cpp"
+    configure_file("${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/template.cpp.in"
+                   "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/${PROJECT_PRIMARY_TARGET}.cpp"
                    @ONLY)
-    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_PRIMARY_TARGET}/template.cpp.in")
+    file(REMOVE "${PROJECT_ROOT_DIR}/src/${PROJECT_OUTPUT_NAME}/template.cpp.in")
 endif()
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Project Test Directory Configuration
 #----------------------------------------------------------------------------------------------------------------------
-# Rename ${PROJECT_ROOT_DIR}/test/template to ${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}
-file(RENAME "${PROJECT_ROOT_DIR}/test/template" "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}")
+# Rename ${PROJECT_ROOT_DIR}/test/template to ${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}
+file(RENAME "${PROJECT_ROOT_DIR}/test/template" "${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}")
 
 # Configure the test directory CMakeLists.txt
 configure_file("${PROJECT_ROOT_DIR}/test/CMakeLists.txt.in"
@@ -165,14 +165,14 @@ configure_file("${PROJECT_ROOT_DIR}/test/CMakeLists.txt.in"
 file(REMOVE "${PROJECT_ROOT_DIR}/test/CMakeLists.txt.in")
 
 # Configure the ${PROJECT_PRIMARY_TARGET} CMakeLists.txt file
-configure_file("${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt.in"
-               "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt"
+configure_file("${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/CMakeLists.txt.in"
+               "${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/CMakeLists.txt"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/CMakeLists.txt.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/CMakeLists.txt.in")
 
 # Configure the ${PROJECT_PRIMARY_TARGET} .cpp file
-configure_file("${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/template_test.cpp.in"
-               "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/${PROJECT_PRIMARY_TARGET}_test.cpp"
+configure_file("${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/template_test.cpp.in"
+               "${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/${PROJECT_PRIMARY_TARGET}_test.cpp"
                @ONLY)
-file(REMOVE "${PROJECT_ROOT_DIR}/test/${PROJECT_PRIMARY_TARGET}/template_test.cpp.in")
+file(REMOVE "${PROJECT_ROOT_DIR}/test/${PROJECT_OUTPUT_NAME}/template_test.cpp.in")
 
