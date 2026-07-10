@@ -1,12 +1,4 @@
 #-----------------------------------------------------------------------------------------------------------------------
-# Settings
-#-----------------------------------------------------------------------------------------------------------------------
-enable_language(CXX)
-set(CMAKE_CXX_STANDARD {{ cmake.cxx_std }})
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-#-----------------------------------------------------------------------------------------------------------------------
 # Google Test
 #-----------------------------------------------------------------------------------------------------------------------
 include(GoogleTest)
@@ -32,7 +24,7 @@ add_executable({{ project.namespace }}::{{ project.name }}_test ALIAS {{ project
 target_sources({{ project.name }}_test
     PRIVATE
 {% if project.type == "Static Library" or project.type == "Shared Library" %}
-        ${CMAKE_SOURCE_DIR}/src/{{ project.name }}.c
+        ${CMAKE_SOURCE_DIR}/src/{{ project.name }}.cpp
 {% endif %}
         ${CMAKE_CURRENT_SOURCE_DIR}/{{ project.name }}_test.cpp
 )
