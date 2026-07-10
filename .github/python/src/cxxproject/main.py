@@ -1,7 +1,6 @@
 # Builtin Imports
 import sys
 import traceback
-import shutil
 
 # Pip Imports
 import click
