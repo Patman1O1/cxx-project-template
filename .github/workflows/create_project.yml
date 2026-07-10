@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       project_type:
-        description: "Project type"
+        description: "The type of project that will be created."
         required: true
         type: choice
         options:
@@ -13,12 +13,16 @@ on:
           - "Shared Library"
           - "Interface Library"
 
+      project_namespace:
+        description: "The namespace that will be applied to CMake targets."
+        required: false
+        type: string
+        default: ""
 permissions:
   contents: write
 
 jobs:
   create_project:
-    # Make sure this is not the template repository
     if: github.repository != 'Patman1O1/cxx-project-template'
     runs-on: ubuntu-latest
 
@@ -26,30 +30,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Configure Bot With GitHub
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-      - name: Run cmake_project.cmake
+      - name: Install Tools
+        run: pip install -e "${GITHUB_WORKSPACE}/.github/python"
+
+      - name: Create Project
         run: |
-          cmake \
-          -D PROJECT_NAME="${{ github.event.repository.name }}" \
-          -D PROJECT_AUTHOR="${{ github.actor }}" \
-          -D PROJECT_DESCRIPTION="${{ github.event.repository.description }}" \
-          -D PROJECT_TYPE="${{ github.event.inputs.project_type }}" \
-          -P "$GITHUB_WORKSPACE/.github/cmake/cmake_project.cmake"
+          create-project \
+            "${{ github.event.repository.name }}" \
+            "${{ github.event.inputs.project_type }}" \
+            "${{ github.actor }}" \
+            "${{ github.event.inputs.project_namespace }}" \
+            "0.1.0" \
+            "${{ github.event.repository.description }}"
 
       - name: Update README.md
         run: |
-          echo -e "# ${{ github.event.repository.name }}\n${{ github.event.repository.description }}" > "$GITHUB_WORKSPACE/README.md"
+          printf '# %s\n%s\n' "${{ github.event.repository.name }}" "${{ github.event.repository.description }}" > "${GITHUB_WORKSPACE}/README.md"
 
       - name: Remove .github directory
-        run: |
-          rm -rf "$GITHUB_WORKSPACE/.github"
+        run: rm -rf "${GITHUB_WORKSPACE}/.github"
 
       - name: Commit changes
         run: |
-          git add .
+          git add -A
           git commit -m "Create ${GITHUB_REPOSITORY}" || echo "No changes to commit"
           git push
