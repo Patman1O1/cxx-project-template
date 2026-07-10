@@ -6,8 +6,8 @@ import shutil
 from jinja2 import Template, Environment, FileSystemLoader
 
 # Local Imports
-from cproject.format import *
-from cproject.cmake import CMake
+from cxxproject.format import *
+from cxxproject.cmake import CMake
 
 
 class Project(object):
